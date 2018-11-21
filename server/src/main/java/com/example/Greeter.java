@@ -11,9 +11,11 @@ public class Greeter {
   public Greeter() {
 
   }
-/**
- * some comments
- */
+    
+  /**
+   * @param someone is a param
+   * @retyrn ot returns someone
+   */
   public final String greet(final String someone) {
     return String.format("Hello, %s!", someone);
   }
