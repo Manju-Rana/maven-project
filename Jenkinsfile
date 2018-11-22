@@ -26,7 +26,7 @@ pipeline {
         }
     
         stage ('Deployments'){
-            parllel{        
+            parallel{        
                 stage ("deploy to staging")
                 {
                     steps {
