@@ -30,8 +30,18 @@ pipeline {
                 stage ("deploy to staging")
                 {
                     steps {
-                        sh "sudo scp -i /Users/Shared/Jenkins/Home/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_stage}:/var/lib/tomcat7/webapps"
+                        sh "sudo scp -i //Users/Shared/Jenkins/Home/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_stage}:/var/lib/tomcat7/webapps"
                     }
+
+                     post {
+                            success {
+                                echo 'Deployed to Stage. Yahoo!!'
+                            } 
+                            failure {
+                                echo 'its failed..:-('
+                            }
+                        }
+
                 }
                stage ("deploy to production")
                 {
