@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
             string(name: 'tomcat_stage', defaultValue:'3.16.187.113', description: 'Stage')
-            string(name: 'tomcat_prod', default:'18.220.65.170', description: 'Prod')
+            string(name: 'tomcat_prod', defaultValue:'18.220.65.170', description: 'Prod')
 
     }
 
