@@ -24,8 +24,6 @@ pipeline {
                 }
             }
         }
-    
-        stage ('Deployments'){
                    
                 stage ("deploy to staging")
                 {
@@ -61,6 +59,6 @@ pipeline {
                 }
           
 
-    }
+    
  }
 }
