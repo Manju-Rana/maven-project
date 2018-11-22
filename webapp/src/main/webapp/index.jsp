@@ -1,1 +1,1 @@
-Hello, World! This is new version.
+Hello, World! This is AWS version.

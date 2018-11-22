@@ -1,44 +1,56 @@
-pipeline {
+pipeline {    
     agent any
+
+    parameters {
+            string(name: 'tomcat_stage', defaultValue:'3.16.187.113', description: 'Stage')
+            string(name: 'tomcat_prod', default:'18.220.65.170', description: 'Prod')
+
+    }
+
+    triggers{
+        pollSCM('* * * * *'')
+    }
+
     stages{
+
         stage('Build'){
             steps {
                 sh 'mvn clean package'
             }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
+        post {
+            success {
+                echo 'Now Archiving...'
+                archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-        stage ("deploy to staging")
-        {
-            steps {
-                build job: 'deploy-to-staging'
-            }
-        }
-       stage ("deploy to production")
-        {
-            steps {
-                    timeout(time:5, unit: 'DAYS')
-                    {
-                        input message:  'approve Prod Deployment ?'                     
+    
+        stage ('Deployments'){
+            parllel{        
+                stage ("deploy to staging")
+                {
+                    steps {
+                        sh "scp -i /Users/manjurana/Documents/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_stage}:/var/lib/tomcat7/webapps"
                     }
-                
-                build job: 'deploy-to-prod'
-            }
-
-            post {
-                    success {
-                        echo 'Deployed to Prod. Yahoo!!!'
-                    } 
-                    failure {
-                        echo 'its failed'
+                }
+               stage ("deploy to production")
+                {
+                    steps {
+                            sh "scp -i /Users/manjurana/Documents/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                     }
 
-            }
-        }
+                    post {
+                            success {
+                                echo 'Deployed to Prod. Yahoo!!!'
+                            } 
+                            failure {
+                                echo 'its failed'
+                            }
+
+                    }
+                }
+                }
 
     }
+}
 }
