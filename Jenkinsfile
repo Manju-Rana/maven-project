@@ -25,7 +25,7 @@ pipeline {
             }
         }
     
-        stages ('Deployments'){
+        stage ('Deployments'){
             parllel{        
                 stage ("deploy to staging")
                 {
