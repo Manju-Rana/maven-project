@@ -26,11 +26,11 @@ pipeline {
         }
     
         stage ('Deployments'){
-            parallel{        
+                   
                 stage ("deploy to staging")
                 {
                     steps {
-                        sh "sudo scp -i //Users/Shared/Jenkins/Home/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_stage}:/var/lib/tomcat7/webapps"
+                        sh "sudo scp -i /Users/Shared/Jenkins/Home/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_stage}:/var/lib/tomcat7/webapps"
                     }
 
                      post {
@@ -46,7 +46,7 @@ pipeline {
                stage ("deploy to production")
                 {
                     steps {
-                            sh "sudo scp -i //Users/Shared/Jenkins/Home/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                            sh "sudo scp -i /Users/Shared/Jenkins/Home/tomcatdemo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                     }
 
                     post {
@@ -59,7 +59,7 @@ pipeline {
 
                     }
                 }
-           }
+          
 
     }
  }
