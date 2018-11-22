@@ -41,10 +41,10 @@ pipeline {
 
                     post {
                             success {
-                                echo 'Deployed to Prod. Yahoo!!!'
+                                echo 'Deployed to Prod. Yahoo!!'
                             } 
                             failure {
-                                echo 'its failed'
+                                echo 'its failed..:-('
                             }
 
                     }
